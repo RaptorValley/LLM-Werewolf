@@ -1,0 +1,11 @@
+# 忽略构建文件夹
+__pycache__/
+
+# 忽略临时文件
+*.log
+*.tmp
+
+# 忽略编辑器文件
+.vscode/
+
+history/
