@@ -12,7 +12,7 @@ git clone https://github.com/RaptorValley
 
 然后打开`call.py`配置模型供应商、名称、API Key等。为方便启用，程序已内置部分常见模型及`base_url`，如下图：
 
-![image-20250809192711639](C:\Users\VICTUS\Desktop\H\Project\LLM-Werewolf\assets\image-20250809192711639.png)
+![image-20250809192711639](\assets\image-20250809192711639.png)
 
 然后运行如下命令（Windows 环境）：
 
