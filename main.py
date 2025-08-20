@@ -9,7 +9,7 @@ import call
 
 
 if __name__ == "__main__":
-    config.provider = sys.argv[1] if len(sys.argv) > 1 else "OpenAI"
+    config.provider = sys.argv[1] if len(sys.argv) > 1 else "ZhipuAI"
     config.model_index = int(sys.argv[2]) if len(sys.argv) > 2 else 0
     interact.generate_log(f"模型提供商：{config.provider}")
     interact.generate_log(f"模型名称：{call.selected_model}")

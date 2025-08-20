@@ -66,7 +66,7 @@ def generate_roles_msg(p, send_context):
             messages = [
                 {
                     "role": "system",
-                    "content": call.werewolf_system_prompt.format(p.id),
+                    "content": "你是一个精通狼人杀的大师玩家",
                 },
                 {
                     "role": "user",
@@ -77,7 +77,7 @@ def generate_roles_msg(p, send_context):
             messages = [
                 {
                     "role": "system",
-                    "content": call.witch_system_prompt.format(p.id),
+                    "content": "你是一个精通狼人杀的大师玩家",
                 },
                 {
                     "role": "user",
@@ -88,7 +88,7 @@ def generate_roles_msg(p, send_context):
             messages = [
                 {
                     "role": "system",
-                    "content": call.seer_system_prompt.format(p.id),
+                    "content": "你是一个精通狼人杀的大师玩家",
                 },
                 {
                     "role": "user",
@@ -99,7 +99,7 @@ def generate_roles_msg(p, send_context):
             messages = [
                 {
                     "role": "system",
-                    "content": call.hunter_system_prompt.format(p.id),
+                    "content": "你是一个精通狼人杀的大师玩家",
                 },
                 {
                     "role": "user",
@@ -110,7 +110,7 @@ def generate_roles_msg(p, send_context):
             messages = [
                 {
                     "role": "system",
-                    "content": call.idiot_system_prompt.format(p.id),
+                    "content": "你是一个精通狼人杀的大师玩家",
                 },
                 {
                     "role": "user",
@@ -121,7 +121,7 @@ def generate_roles_msg(p, send_context):
             messages = [
                 {
                     "role": "system",
-                    "content": call.villager_system_prompt.format(p.id),
+                    "content": "你是一个精通狼人杀的大师玩家",
                 },
                 {
                     "role": "user",
@@ -131,18 +131,42 @@ def generate_roles_msg(p, send_context):
     return messages
 
 
-def assemble_llm_context(visible_context, recent, instruction):
+def assemble_llm_context(pid, visible_context, recent, instruction):
     """
     构造发送给 LLM 的上下文，其由三部分组成：
     1. 对当前玩家可见的上下文的精简版（由 lib.context_filter 获得）
     2. 对模型的指令：来自当前流程的指令文本
     """
+    player = config.players[pid - 1]
     summary_context = extract_key_context(visible_context)  # (1) 精简版上下文
     # (3) 将 instruction 封装为一个系统级消息结构（此处 role 设为 "system"）
-    final_context = {
-        "summary_speech_history": summary_context,
-        "recent_messages": recent,
-        "instruction": instruction,
-    }
+
+    final_context = (
+        call.prompt_dict["head"].format(
+            id=player.id,
+            role=player.role,
+            summary=summary_context,
+            recent=recent,
+            instruction=instruction,
+        )
+        + call.prompt_dict["speech"]
+        + call.prompt_dict["action"]
+        + call.prompt_dict["tips"][player.role]
+    )
     # print(final_context)  # 调试选项
     return final_context
+
+
+def file_process(file_path):
+    """
+    处理文件内容，提取关键信息并返回。
+    """
+    import json
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        if file_path.endswith("txt"):
+            content = f.read()
+        elif file_path.endswith("json"):
+            content = json.load(f)
+
+    return content

@@ -3,7 +3,7 @@ import datetime
 import init
 import interact
 
-provider: str = "OpenAI"
+provider: str = ""
 model_index: int = 0
 
 # 新建12个玩家

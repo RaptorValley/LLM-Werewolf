@@ -16,6 +16,10 @@ class Player:
         ]  # 对其它玩家的印象
         self.recent_msg = []  # 最近的消息
 
+    def reflect(self):
+        # 反思自己在游戏中的表现
+        pass
+
 
 # 定义为玩家分配身份的函数
 def assign_roles(players, roles):
